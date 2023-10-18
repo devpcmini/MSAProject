@@ -1,4 +1,4 @@
-package pcm.spring.apigatewayservice.filter;
+package pcm.spring.apigatewayservice.config;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
