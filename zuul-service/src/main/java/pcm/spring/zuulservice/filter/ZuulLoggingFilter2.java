@@ -11,9 +11,9 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 
 @Component
-public class ZuulLoggingFilter extends ZuulFilter{
+public class ZuulLoggingFilter2 extends ZuulFilter{
 
-	Logger log = LoggerFactory.getLogger(ZuulLoggingFilter.class);
+	Logger log = LoggerFactory.getLogger(ZuulLoggingFilter2.class);
 	//쓰거나 쓰지않거나
 	@Override
 	public boolean shouldFilter() {
@@ -23,18 +23,18 @@ public class ZuulLoggingFilter extends ZuulFilter{
 	//어떠한 동작하는지
 	@Override
 	public Object run() throws ZuulException {
-		log.info("*********************** pre printing logs: ");
+		log.info("*********************** post printing logs: ");
 		
 		RequestContext ctx = RequestContext.getCurrentContext();
 		HttpServletRequest request = ctx.getRequest();
-		log.info("*********************** pre printing logs: " + request.getRequestURI());
+		log.info("*********************** post printing logs: " + request.getRequestURI());
 		return null;
 	}
 
-	//사전 필터인지 사후 필터인지, *사전 필터
+	//사전 필터인지 사후 필터인지, *사후 필터
 	@Override
 	public String filterType() {
-		return "pre";
+		return "post";
 	}
 
 	//순서
