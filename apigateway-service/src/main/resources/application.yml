@@ -2,11 +2,17 @@ server:
   port: 8080
   
 eureka:
+  server:
+    ip: 127.0.0.1
+    port: 8761
+    domain: eureka
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${eureka.server.ip}:${eureka.server.port}/${eureka.server.domain}
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${server.port}
       
 spring:
   application:
@@ -41,4 +47,3 @@ spring:
               baseMessage : "LoggingFilter test"
               preLogger: true
               postLogger: true
-      
