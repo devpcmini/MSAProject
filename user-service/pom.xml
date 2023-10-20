@@ -71,12 +71,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration> 
                     <finalName>user-service</finalName>
-					<archive> 
-						<manifest> 
-						    <addClasspath>true</addClasspath>
-							<mainClass>pcm.spring.userservice.UserServiceApplication</mainClass> 
-						</manifest> 
-					</archive> 
 				</configuration>
             </plugin>
         </plugins>
