@@ -2,10 +2,10 @@ server:
   port: 8080
   
 eureka:
-  server:
-    ip: 127.0.0.1
-    port: 8761
-    domain: eureka
+#  server:
+#    ip: 127.0.0.1
+#    port: 8761
+#    domain: eureka
   client:
     register-with-eureka: true
     fetch-registry: true
