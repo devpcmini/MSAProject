@@ -7,12 +7,18 @@ greeting:
 spring:
   application:
     name: user-service
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    platform: postgres
-    username: postgres
-    password: 1234
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    platform: postgres
+#    username: postgres
+#    password: 1234
 
 eureka:
   client:
