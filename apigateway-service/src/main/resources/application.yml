@@ -2,10 +2,10 @@ server:
   port: 8080
   
 eureka:
-#  server:
-#    ip: 127.0.0.1
-#    port: 8761
-#    domain: eureka
+  server:
+    ip: 127.0.0.1
+    port: 8761
+    domain: eureka
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -26,6 +26,14 @@ spring:
             preLogger: true
             postLogger: true
       routes:
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+          - Path=/user-service/**
+        filters:
+          #          - AddRequestHeader=first-request, first-request-header2
+          #          - AddResponseHeader=first-response, first-response-header2
+          - CustomFilter
       - id: first-service
         uri: lb://MY-FIRST-SERVICE
         predicates:
