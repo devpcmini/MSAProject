@@ -8,7 +8,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
   instance:
-    prefer-ip-address: true
+    hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
 spring:
   application:
@@ -22,32 +22,32 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-      - id: user-service
-        uri: lb://USER-SERVICE
-        predicates:
-          - Path=/user-service/**
-        filters:
-          #          - AddRequestHeader=first-request, first-request-header2
-          #          - AddResponseHeader=first-response, first-response-header2
-          - CustomFilter
-      - id: first-service
-        uri: lb://MY-FIRST-SERVICE
-        predicates:
-          - Path=/first-service/**
-        filters:
-#          - AddRequestHeader=first-request, first-request-header2
-#          - AddResponseHeader=first-response, first-response-header2
-          - CustomFilter
-      - id: second-service
-        uri: lb://MY-SECOND-SERVICE
-        predicates:
-          - Path=/second-service/**
-        filters:
-#          - AddRequestHeader=second-request, second-request-header2
-#          - AddResponseHeader=second-response, second-response-header2
-          - name: CustomFilter
-          - name: LoggingFilter
-            args:
-              baseMessage : "LoggingFilter test"
-              preLogger: true
-              postLogger: true
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+          filters:
+            #          - AddRequestHeader=first-request, first-request-header2
+            #          - AddResponseHeader=first-response, first-response-header2
+            - CustomFilter
+        - id: first-service
+          uri: lb://MY-FIRST-SERVICE
+          predicates:
+            - Path=/first-service/**
+          filters:
+  #          - AddRequestHeader=first-request, first-request-header2
+  #          - AddResponseHeader=first-response, first-response-header2
+            - CustomFilter
+        - id: second-service
+          uri: lb://MY-SECOND-SERVICE
+          predicates:
+            - Path=/second-service/**
+          filters:
+  #          - AddRequestHeader=second-request, second-request-header2
+  #          - AddResponseHeader=second-response, second-response-header2
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage : "LoggingFilter test"
+                preLogger: true
+                postLogger: true
