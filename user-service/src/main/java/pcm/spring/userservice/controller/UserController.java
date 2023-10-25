@@ -1,5 +1,6 @@
 package pcm.spring.userservice.controller;
 
+import com.netflix.discovery.converters.Auto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 import pcm.spring.userservice.dto.UserDto;
 import pcm.spring.userservice.service.UserService;
+import pcm.spring.userservice.vo.Greeting;
 import pcm.spring.userservice.vo.RequestUser;
 
 @RestController
@@ -17,6 +19,9 @@ public class UserController {
 
     private Environment env;
     private UserService userService;
+
+    @Autowired
+    private Greeting greeting;
 
     @Autowired
     public UserController(Environment env, UserService userService){
@@ -31,7 +36,8 @@ public class UserController {
 
     @GetMapping("/test")
     public String test(){
-        return env.getProperty("greeting.message");
+//        return env.getProperty("greeting.message");
+        return greeting.getMessage();
     }
 
     @PostMapping("/users")
