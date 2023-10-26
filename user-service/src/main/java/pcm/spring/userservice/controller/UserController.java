@@ -51,7 +51,7 @@ public class UserController {
         UserDto userDto = mapper.map(requestUser, UserDto.class);
         userService.createUser(userDto);
 
-        ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+        ResponseUser responseUser = mapper.map(userDto, ResponseUser.class); //userDto를 ResponseUser 로 타입 바꾸기
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser); //201코드 반환
     }
