@@ -27,9 +27,7 @@ spring:
           predicates:
             - Path=/user-service/**
           filters:
-            #          - AddRequestHeader=first-request, first-request-header2
-            #          - AddResponseHeader=first-response, first-response-header2
-            - CustomFilter
+            # - CustomFilter
         - id: first-service
           uri: lb://MY-FIRST-SERVICE
           predicates:
