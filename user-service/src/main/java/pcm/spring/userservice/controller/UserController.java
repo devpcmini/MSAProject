@@ -32,9 +32,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    //userService client 포트번호 return
     @GetMapping("/healthCheck")
     public String healthcheck(){
-        return "ok";
+        return String.format("Port %s",env.getProperty("local.server.port"));
     }
 
     @GetMapping("/test")
