@@ -16,6 +16,9 @@ import pcm.spring.userservice.vo.Greeting;
 import pcm.spring.userservice.vo.RequestUser;
 import pcm.spring.userservice.vo.ResponseUser;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/user-service")
 public class UserController {
