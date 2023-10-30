@@ -1,6 +1,5 @@
 package pcm.spring.userservice.vo;
 
-import jdk.jfr.Name;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
