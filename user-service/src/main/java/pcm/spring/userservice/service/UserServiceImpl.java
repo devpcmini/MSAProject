@@ -4,12 +4,16 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pcm.spring.userservice.dto.UserDto;
 import pcm.spring.userservice.jpa.UserEntity;
 import pcm.spring.userservice.jpa.UserRepository;
+import pcm.spring.userservice.vo.ResponseOrder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,5 +43,25 @@ public class UserServiceImpl implements UserService{
         UserDto rtnUserDto = mapper.map(userEntity,UserDto.class);
 
         return rtnUserDto;
+    }
+
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if( userEntity == null){
+            throw new UsernameNotFoundException("User Not Found");
+        }
+
+        UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
+
+        List<ResponseOrder> orders = new ArrayList<>();
+        userDto.setOrders(orders);
+
+        return userDto;
+    }
+
+    @Override
+    public Iterable<UserEntity> getUserByAll() {
+        return userRepository.findAll();
     }
 }
