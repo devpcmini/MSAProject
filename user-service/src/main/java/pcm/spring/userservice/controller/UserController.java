@@ -1,6 +1,7 @@
 package pcm.spring.userservice.controller;
 
 import com.netflix.discovery.converters.Auto;
+import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pcm.spring.userservice.dto.UserDto;
+import pcm.spring.userservice.jpa.UserEntity;
 import pcm.spring.userservice.service.UserService;
 import pcm.spring.userservice.vo.Greeting;
 import pcm.spring.userservice.vo.RequestUser;
@@ -18,6 +20,9 @@ import pcm.spring.userservice.vo.ResponseUser;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user-service")
@@ -60,4 +65,22 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser); //201코드 반환
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<List<ResponseUser>> getUsers(){
+        Iterable<UserEntity> userList = userService.getUserByAll();
+        List<ResponseUser> result = new ArrayList<>();
+
+        userList.forEach(v -> {
+            result.add(new ModelMapper().map(v, ResponseUser.class));
+        });
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<ResponseUser> getUsers(@PathVariable String userId){
+        UserDto userDto = userService.getUserByUserId(userId);
+        ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
 }
