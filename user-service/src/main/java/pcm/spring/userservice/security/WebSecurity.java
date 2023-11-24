@@ -14,13 +14,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/users/**").permitAll();
         http.authorizeRequests().antMatchers("/**")
                 .hasIpAddress("192.168.45.206")
                 .and()
                 .addFilter(getAuthenticationonFilter());
 
-        http.headers().frameOptions().disable(); //frame무시
+        http.headers().frameOptions().disable();
     }
 
     private AuthenticationFilter getAuthenticationonFilter() throws Exception {
