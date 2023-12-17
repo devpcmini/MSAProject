@@ -3,11 +3,15 @@ package pcm.spring.userservice.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import pcm.spring.userservice.dto.UserDto;
+import pcm.spring.userservice.service.UserService;
 import pcm.spring.userservice.vo.RequestLogin;
 
 import javax.servlet.FilterChain;
@@ -20,6 +24,18 @@ import java.util.ArrayList;
 @Data
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private UserService userService;
+    private Environment env;
+
+    public AuthenticationFilter(AuthenticationManager authenticationManager,
+                                UserService userService,
+                                Environment env){
+        super.setAuthenticationManager(authenticationManager);
+        this.userService = userService;
+        this.env = env;
+    }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
@@ -45,7 +61,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 //        super.successfulAuthentication(request, response, chain, authResult);
-        log.debug(((User)authResult.getPrincipal()).getUsername()); //인증이 완료된 상태의 결과값에서 userName을 찾아오기
+        String userName = ((User)authResult.getPrincipal()).getUsername(); //인증이 완료된 상태의 결과값에서 userName을 찾아오기
+        UserDto userDetails = userService.getUserDetailByEmail(userName);
     }
 
 }
